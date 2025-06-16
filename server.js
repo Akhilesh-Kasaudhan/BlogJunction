@@ -9,23 +9,35 @@ import authRoutes from "./routes/authRoute.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import commentRoutes from "./routes/commentRoute.js";
 import connectDB from "./config/db.js";
+import bodyParser from "body-parser";
 dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 
-app.use(express.json());
+const allowedOrigins = ["http://localhost:5173"];
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
+
+    allowedHeaders: "Content-Type,Authorization",
+    methods: "GET,POST,PUT,DELETE",
   })
 );
+
+app.use(bodyParser.json());
+
+app.use(express.json());
+
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
-app.get("/", (req, res) => {
-  res.send("Hello from the server!");
-});
 
 app.use("/api/auth", authRoutes);
 app.use("/api/categories", categoryRoutes);
