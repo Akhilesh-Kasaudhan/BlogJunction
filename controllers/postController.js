@@ -40,6 +40,23 @@ export const createPost = asyncHandler(async (req, res) => {
   });
 });
 
+export const toggleFeaturedStatus = asyncHandler(async (req, res) => {
+  const post = await Post.findById(req.params.id);
+  if (!post) {
+    throw new CustomError("No post found", 404);
+  }
+  post.isFeatured = !post.isFeatured;
+  await post.save();
+  res.status(200).json({
+    message: "Post feature status updated",
+    post: {
+      _id: post._id,
+      title: post.title,
+      isFeatured: post.isFeatured,
+    },
+  });
+});
+
 export const getFeaturedPosts = asyncHandler(async (req, res) => {
   const posts = await Post.find({ isFeatured: true })
     .populate("author", "name email")
