@@ -6,7 +6,7 @@ import fs from "fs";
 import { generateBlogContent } from "../utils/geminiAI.js";
 
 export const createPost = asyncHandler(async (req, res) => {
-  const { title, desc, content: rawContent, category, image } = req.body;
+  const { title, desc, content, category, image } = req.body;
 
   if (!title || !desc || !rawContent || !category) {
     throw new CustomError("All fields are required", 400);
@@ -27,7 +27,7 @@ export const createPost = asyncHandler(async (req, res) => {
   const post = await Post.create({
     title,
     desc,
-    content: rawContent,
+    content,
     category,
     image: imageUrl,
     author: req.user._id,
