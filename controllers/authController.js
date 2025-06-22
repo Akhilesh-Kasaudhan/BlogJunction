@@ -81,7 +81,7 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
   sendToken(user, 200, res, "User profile updated successfully");
 });
 export const deleteUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findByIdAndDelete(req.user.id);
+  const user = await User.findByIdAndDelete(req.params.id);
   if (!user) {
     throw new CustomError("User not found", 404);
   }
