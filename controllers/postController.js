@@ -109,7 +109,7 @@ export const getPosts = asyncHandler(async (req, res) => {
     throw new CustomError("Invalid page number", 400);
   }
   const posts = await Post.find()
-    .populate("author", "name email")
+    .populate("author", "username email")
     .sort({ createdAt: -1 })
     .skip(skip)
     .limit(limit);
