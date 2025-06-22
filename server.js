@@ -32,7 +32,7 @@ app.use(
     // preflightContinue: false,
     // optionsSuccessStatus: 204,
     allowedHeaders: "Content-Type,Authorization",
-    methods: "GET,POST,PUT,DELETE",
+    methods: "GET,POST,PUT,DELETE,PATCH",
   })
 );
 app.use(cookieParser());
