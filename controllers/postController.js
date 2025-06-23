@@ -54,7 +54,7 @@ export const toggleFeaturedStatus = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     message: "Post feature status updated",
-    post: updatePost,
+    post: updatedPost,
   });
 });
 
