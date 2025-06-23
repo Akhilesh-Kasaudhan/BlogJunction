@@ -47,19 +47,20 @@ export const toggleFeaturedStatus = asyncHandler(async (req, res) => {
   }
   post.isFeatured = !post.isFeatured;
   await post.save();
+  const updatedPost = await Post.findById(post._id).populate(
+    "author",
+    "username email"
+  );
   res.status(200).json({
+    success: true,
     message: "Post feature status updated",
-    post: {
-      _id: post._id,
-      title: post.title,
-      isFeatured: post.isFeatured,
-    },
+    post: updatePost,
   });
 });
 
 export const getFeaturedPosts = asyncHandler(async (req, res) => {
   const posts = await Post.find({ isFeatured: true })
-    .populate("author", "name email")
+    .populate("author", "username email")
     .sort({ createdAt: -1 });
 
   res.status(200).json({
@@ -129,8 +130,8 @@ export const getPosts = asyncHandler(async (req, res) => {
 
 export const getPostById = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id)
-    .populate("author", "name email")
-    .populate("likes", "name email");
+    .populate("author", "username email")
+    .populate("likes", "username email");
 
   if (!post) {
     throw new CustomError("Post not found", 404);
