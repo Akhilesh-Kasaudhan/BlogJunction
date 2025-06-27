@@ -230,7 +230,10 @@ export const getMostLikedPosts = asyncHandler(async (req, res) => {
 });
 
 export const getPostsByUser = asyncHandler(async (req, res) => {
-  const userId = req.params.userId;
+  const { userId } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    throw new CustomError("Invalid user ID", 400);
+  }
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const skip = (page - 1) * limit;
