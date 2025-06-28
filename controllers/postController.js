@@ -4,6 +4,7 @@ import CustomError from "../utils/customError.js";
 import uploadOnCloudinary from "../utils/cloudinary.js";
 import fs from "fs";
 import { generateBlogContent } from "../utils/geminiAI.js";
+import mongoose from "mongoose";
 
 export const createPost = asyncHandler(async (req, res) => {
   const { title, desc, content, category, image } = req.body;
