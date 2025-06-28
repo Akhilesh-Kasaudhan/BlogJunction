@@ -288,7 +288,17 @@ export const generateContent = asyncHandler(async (req, res) => {
   if (!title || !desc) {
     throw new CustomError("Title and description are required", 400);
   }
-  const prompt = `Write a detailed blog post of minimum 200 words on the topic: "${title}". Make it engaging, informative and relevant to the description "${desc}" `;
+  const prompt = `Write a detailed and engaging blog post of at least 200 words on the topic: "${title}". The post should be informative, well-structured, and tailored to the following context or description: "${desc}".
+
+Important:
+
+Do not include any HTML tags, markdown, or special formatting.
+
+Return the output as plain text only.
+
+Focus on clarity, coherence, and relevance to the topic and description.
+
+The tone should be professional yet conversational to keep readers interested.`;
 
   const result = await generateBlogContent(prompt);
 
