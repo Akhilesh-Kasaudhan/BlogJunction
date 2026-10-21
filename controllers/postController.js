@@ -288,22 +288,27 @@ export const generateContent = asyncHandler(async (req, res) => {
   if (!title || !desc) {
     throw new CustomError("Title and description are required", 400);
   }
-  const prompt = `Write a detailed and engaging blog post of at least 200 words on the topic: "${title}". Use the following context: "${desc}".
+  const prompt = `Write a detailed and engaging blog post of at least 200 words on the topic: "${title}". The post should be informative, well-structured, and tailored to the following context or description: "${desc}".
 
-Format Rules:
-1. Do not use Markdown symbols (like #, *, or **).
-2. Clearly label every structural element on a new line using these exact prefix tags:
-   - [HEADING]: For section titles
-   - [SUBHEADING]: For sub-section titles
-   - [PARAGRAPH]: For body text
-   - [BULLET]: For list items
-3. Return plain text only with these bracketed labels.
 
-Structure:
-- Start with a compelling [HEADING] and introductory [PARAGRAPH].
-- Use [HEADING] or [SUBHEADING] tags to break the content into clear sections.
-- Include at least one list using multiple [BULLET] entries.
-- Maintain a professional yet conversational tone throughout.`;
+
+Important:
+
+
+
+Do not include any HTML tags, markdown, or special formatting.
+
+
+
+Return the output as plain text only.
+
+
+
+Focus on clarity, coherence, and relevance to the topic and description.
+
+
+
+The tone should be professional yet conversational to keep readers interested.`;
 
   const result = await generateBlogContent(prompt);
 

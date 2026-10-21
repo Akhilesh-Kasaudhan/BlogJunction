@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  healthCheck,
   loginUser,
   registerUser,
   logoutUser,
@@ -11,6 +12,7 @@ import {
 import verifyToken from "../middlewares/verifyToken.js";
 
 const router = express.Router();
+router.get("/health", healthCheck);
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/logout", verifyToken, logoutUser);

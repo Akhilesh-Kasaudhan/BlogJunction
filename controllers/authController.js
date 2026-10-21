@@ -3,6 +3,14 @@ import CustomError from "../utils/customError.js";
 import User from "../models/User.js";
 import sendToken from "../utils/sendToken.js";
 
+//health check route
+export const healthCheck=asyncHandler(async(req,res)=>{
+  res.status(200).json({
+    success: true,
+    message: "Server is running smoothly"
+  })
+});
+
 export const registerUser = asyncHandler(async (req, res) => {
   const { username, email, password, role } = req.body;
   const existingUser = await User.findOne({ email });
