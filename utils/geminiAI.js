@@ -5,7 +5,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 export const generateBlogContent = async (prompt) => {
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-3.7-flash",
+      model: "gemini-3.5-flash-lite",
     });
 
     const result = await model.generateContent(prompt);
